@@ -3,6 +3,7 @@ import { Bricolage_Grotesque, Space_Grotesk } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/layout/Header'
 import MobileBottomNav from '@/components/layout/MobileBottomNav'
+import AiConcierge from '@/components/ai/AiConcierge'
 
 const display = Bricolage_Grotesque({ subsets: ['latin'], variable: '--font-display', display: 'swap' })
 const body = Space_Grotesk({ subsets: ['latin'], variable: '--font-body', display: 'swap' })
@@ -31,6 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="font-body antialiased">
         <Header />
         {children}
+        <AiConcierge />
         <MobileBottomNav />
       </body>
     </html>

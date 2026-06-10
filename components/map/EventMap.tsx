@@ -38,8 +38,8 @@ export default function EventMap() {
 
   return (
     <div className="relative h-[calc(100dvh-76px)] min-h-[620px] overflow-hidden rounded-none md:h-[calc(100dvh-120px)] md:rounded-card md:border md:border-border">
-      <MapContainer center={[45.4654, 9.1866]} zoom={11} scrollWheelZoom className="h-full w-full">
-        <TileLayer attribution="&copy; OpenStreetMap &copy; CARTO" url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" />
+      <MapContainer center={[45.4654, 9.1866]} zoom={11} scrollWheelZoom zoomControl={false} attributionControl={false} className="h-full w-full">
+        <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" />
         <FlyTo event={selected} />
         {events.map((event) => (
           <Marker key={event.slug} position={[event.lat, event.lng]} icon={markerIcon(event, selected?.slug === event.slug)} eventHandlers={{ click: () => setSelected(event) }} />
