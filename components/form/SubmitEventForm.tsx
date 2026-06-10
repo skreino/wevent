@@ -64,7 +64,7 @@ export default function SubmitEventForm() {
 
       <FormSection eyebrow="02" title="Dove e quando">
         <FormInput label="Venue / Nome locale*" name="venue" required />
-        <FormSelect label="Citta*" name="city" required>{cities.map((city) => <option key={city}>{city}</option>)}</FormSelect>
+        <FormSelect label="Città*" name="city" required>{cities.map((city) => <option key={city}>{city}</option>)}</FormSelect>
         <FormInput label="Indirizzo*" name="address" required />
         <FormInput label="Data*" name="date" type="date" required />
         <FormInput label="Ora inizio*" name="timeStart" type="time" required />

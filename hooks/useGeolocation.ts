@@ -13,6 +13,7 @@ export function useGeolocation() {
   }, [])
 
   const request = useCallback(() => {
+    setError(null)
     if (!navigator.geolocation) {
       setError('Geolocalizzazione non disponibile')
       return

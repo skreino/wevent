@@ -7,9 +7,11 @@ import OrganizerCTA from '@/components/home/OrganizerCTA'
 import EventGrid from '@/components/events/EventGrid'
 import BrandMark from '@/components/ui/BrandMark'
 import { events } from '@/data/events'
+import { isWeekendEvent } from '@/lib/eventFilters'
 
 export default function HomePage() {
   const featured = events.filter((event) => event.featured)
+  const weekendEvents = events.filter(isWeekendEvent).slice(0, 4)
   return (
     <PageWrapper className="pt-0">
       <Hero />
@@ -27,7 +29,7 @@ export default function HomePage() {
       </section>
       <section className="py-8">
         <SectionHeader title="Nel weekend" href="/explore?date=weekend" />
-        <EventGrid events={events.slice(8, 12)} />
+        <EventGrid events={weekendEvents} />
       </section>
       <OrganizerCTA />
       <footer className="mt-12 flex flex-col gap-4 border-t border-border py-8 text-sm text-muted md:flex-row md:items-center md:justify-between">

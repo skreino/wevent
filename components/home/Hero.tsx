@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { MapPin, Search } from 'lucide-react'
 import BrandMark from '@/components/ui/BrandMark'
@@ -9,7 +10,16 @@ import { useGeolocation } from '@/hooks/useGeolocation'
 
 export default function Hero() {
   const reduce = useReducedMotion()
-  const { request, loading } = useGeolocation()
+  const { lat, lng, request, loading, error } = useGeolocation()
+  const [geoMessage, setGeoMessage] = useState('')
+
+  useEffect(() => {
+    if (lat && lng) setGeoMessage('Posizione rilevata. Ora puoi filtrare gli eventi vicini.')
+  }, [lat, lng])
+
+  useEffect(() => {
+    if (error) setGeoMessage(error === 'Permesso posizione negato' ? 'Permesso negato. Puoi cercare per città.' : error)
+  }, [error])
 
   return (
     <section className="relative min-h-[76dvh] overflow-hidden py-5 md:grid md:min-h-[720px] md:grid-cols-[1.05fr_0.95fr] md:items-center md:gap-8 md:py-12">
@@ -29,13 +39,14 @@ export default function Hero() {
         </h1>
         <p className="mt-6 max-w-md text-base leading-7 text-muted md:text-lg">Serate, aperitivi, DJ set e live vicino a te. Entri, trovi, decidi.</p>
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-          <button onClick={request} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-chip bg-lime px-5 py-3 font-black text-black transition hover:bg-cream">
-            <MapPin size={18} /> {loading ? 'Cerco...' : 'Usa la mia posizione'}
+          <button onClick={request} disabled={loading} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-chip bg-lime px-5 py-3 font-black text-black transition hover:bg-cream disabled:cursor-wait disabled:opacity-80">
+            <MapPin size={18} /> {loading ? 'Rilevo posizione...' : lat && lng ? 'Posizione rilevata' : 'Usa la mia posizione'}
           </button>
           <Link href="/explore" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-chip bg-surface2 px-5 py-3 font-black text-cream ring-1 ring-border transition hover:ring-lime">
-            <Search size={18} /> Cerca una citta
+            <Search size={18} /> Cerca una città
           </Link>
         </div>
+        {geoMessage && <p className="mt-3 max-w-sm text-sm font-bold text-muted">{geoMessage}</p>}
       </motion.div>
       <div className="relative z-10 mt-10 grid grid-cols-[1fr_0.72fr] gap-3 md:mt-0">
         <div className="relative aspect-[3/4] overflow-hidden rounded-card border border-border bg-surface">

@@ -6,7 +6,7 @@ import { ArrowLeft, CalendarDays, Clock, Instagram, MapPin } from 'lucide-react'
 import type { Event } from '@/data/events'
 import { events } from '@/data/events'
 import { categoryLabels } from '@/lib/categories'
-import { formatDate, googleMapsUrl } from '@/lib/utils'
+import { formatDate, googleMapsUrl, instagramUrl } from '@/lib/utils'
 import Badge from '@/components/ui/Badge'
 import FavoriteButton from '@/components/ui/FavoriteButton'
 import ShareButton from '@/components/ui/ShareButton'
@@ -14,6 +14,7 @@ import EventCard from './EventCard'
 
 export default function EventDetail({ event }: { event: Event }) {
   const similar = events.filter((item) => item.category === event.category && item.slug !== event.slug).slice(0, 3)
+  const eventInstagramUrl = instagramUrl(event.instagramUrl)
 
   return (
     <article>
@@ -38,9 +39,9 @@ export default function EventDetail({ event }: { event: Event }) {
         <hr className="my-7 border-border" />
         <p className="text-base leading-7 text-cream/85">{event.description}</p>
         <div className="mt-7 grid gap-3 sm:grid-cols-2">
-          <a href={event.bookingUrl} className="inline-flex min-h-12 items-center justify-center rounded-chip bg-lime px-5 py-3 font-black text-black">Prenota / Info</a>
+          {event.bookingUrl && <a href={event.bookingUrl} target="_blank" className="inline-flex min-h-12 items-center justify-center rounded-chip bg-lime px-5 py-3 font-black text-black">Prenota / Info</a>}
           <a href={googleMapsUrl(event)} target="_blank" className="inline-flex min-h-12 items-center justify-center rounded-chip bg-surface2 px-5 py-3 font-black">Indicazioni</a>
-          <a href={event.instagramUrl} target="_blank" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-chip border border-border px-5 py-3 font-black"><Instagram size={18} /> Instagram</a>
+          {eventInstagramUrl && <a href={eventInstagramUrl} target="_blank" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-chip border border-border px-5 py-3 font-black"><Instagram size={18} /> Instagram</a>}
         </div>
         <div className="mt-6 flex gap-3">
           <FavoriteButton slug={event.slug} label />

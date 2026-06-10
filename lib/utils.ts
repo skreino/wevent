@@ -6,7 +6,7 @@ export function cn(...classes: Array<string | false | null | undefined>) {
 
 export function formatPrice(event: Event) {
   if (event.priceType === 'free') return 'Gratuito'
-  return `EUR ${event.priceAmount ?? 10}`
+  return `€${event.priceAmount ?? 10}`
 }
 
 export function formatDate(date: string, time?: string) {
@@ -29,4 +29,12 @@ export function haversineKm(a: { lat: number; lng: number }, b: { lat: number; l
 
 export function googleMapsUrl(event: Event) {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${event.venue} ${event.address} ${event.city}`)}`
+}
+
+export function instagramUrl(value?: string) {
+  if (!value) return null
+  const clean = value.trim().replace(/^@/, '')
+  if (!clean || clean === 'https://instagram.com' || clean === 'instagram.com') return null
+  if (clean.startsWith('https://instagram.com/') || clean.startsWith('https://www.instagram.com/')) return clean
+  return `https://instagram.com/${clean}`
 }

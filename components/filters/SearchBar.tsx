@@ -10,7 +10,7 @@ export default function SearchBar({ value, onChange }: { value: string; onChange
       <input
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        placeholder="Cerca evento, locale, citta..."
+        placeholder="Cerca evento, locale, città..."
         className="h-13 w-full rounded-card border border-border bg-surface2 py-4 pl-12 pr-12 text-base outline-none transition placeholder:text-muted focus:border-lime focus:ring-2 focus:ring-lime/20"
       />
       {value && (

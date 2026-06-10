@@ -53,7 +53,7 @@ function demoReply(question: string) {
     '',
     ...lines,
     '',
-    'Se mi dici citta, budget e se volete parlare o muovervi, stringo meglio la scelta.'
+    'Se mi dici città, budget e se volete parlare o muovervi, stringo meglio la scelta.'
   ].join('\n')
 }
 
@@ -95,9 +95,9 @@ export async function POST(request: Request) {
               'Sei il concierge AI di wevent, una app per decidere cosa fare stasera.',
               'Rispondi in italiano, tono breve, sicuro, zero corporate.',
               'Suggerisci solo eventi presenti nel catalogo.',
-              'Quando consigli un evento includi sempre titolo, zona/citta, mood e link /events/slug.',
+              'Quando consigli un evento includi sempre titolo, zona/città, mood e link /events/slug.',
               'Se mancano dati importanti, fai massimo una domanda e proponi comunque una prima scelta.',
-              'Non inventare prezzi, indirizzi o disponibilita.'
+              'Non inventare prezzi, indirizzi o disponibilità.'
             ].join(' ')
           },
           {

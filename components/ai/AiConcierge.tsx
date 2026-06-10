@@ -53,7 +53,7 @@ export default function AiConcierge() {
         body: JSON.stringify({ messages: nextMessages })
       })
       const data = await response.json() as { answer?: string }
-      setMessages((current) => [...current, { role: 'assistant', content: data.answer || 'Non ho trovato il piano giusto. Riprova con citta e mood.' }])
+      setMessages((current) => [...current, { role: 'assistant', content: data.answer || 'Non ho trovato il piano giusto. Riprova con città e mood.' }])
     } catch {
       setMessages((current) => [...current, { role: 'assistant', content: 'Connessione ballerina. Riprova tra un attimo.' }])
     } finally {

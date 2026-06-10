@@ -23,7 +23,7 @@ const demoReplies = [
   'Ci sta. Io direi di bloccarlo prima che cambiamo idea.',
   'Questo mi sembra il compromesso giusto.',
   'Ok, ma dopo prendiamo anche qualcosa da bere.',
-  'Se e vicino per me super si.'
+  'Se è vicino per me super sì.'
 ]
 
 function getStoredChat(slug: string): ChatMessage[] {
@@ -39,7 +39,6 @@ export default function MatchGame() {
   const [stage, setStage] = useState<Stage>('intro')
   const [index, setIndex] = useState(0)
   const [yourLikes, setYourLikes] = useState<string[]>([])
-  const [theirLikes, setTheirLikes] = useState<string[]>([])
   const [matchedEvent, setMatchedEvent] = useState<Event | null>(null)
   const [chat, setChat] = useState<ChatMessage[]>([])
   const [draft, setDraft] = useState('')
@@ -47,44 +46,44 @@ export default function MatchGame() {
 
   const current = starterEvents[index]
   const progress = Math.round((index / starterEvents.length) * 100)
-
   const likedEvents = useMemo(() => starterEvents.filter((event) => yourLikes.includes(event.slug)), [yourLikes])
 
   function reset() {
     setStage('intro')
     setIndex(0)
     setYourLikes([])
-    setTheirLikes([])
     setMatchedEvent(null)
     setChat([])
     setDraft('')
   }
 
   function choose(like: boolean) {
-    if (like && current) setYourLikes((items) => [...items, current.slug])
+    const nextLikes = like && current ? [...yourLikes, current.slug] : yourLikes
+    setYourLikes(nextLikes)
     const next = index + 1
+
     if (next >= starterEvents.length) {
       setStage('them')
       setIndex(0)
-      setTimeout(resolveTheirTurn, 650)
+      setTimeout(() => resolveTheirTurn(nextLikes), 650)
       return
     }
+
     setIndex(next)
   }
 
-  function resolveTheirTurn() {
+  function resolveTheirTurn(likes = yourLikes) {
     const candidateLikes = starterEvents.filter((event, eventIndex) => event.featured || event.hot || eventIndex % 3 === 0).map((event) => event.slug)
-    const overlap = yourLikes.filter((slug) => candidateLikes.includes(slug))
-    const fallback = yourLikes[0] || candidateLikes[0]
+    const overlap = likes.filter((slug) => candidateLikes.includes(slug))
+    const fallback = likes[0] || candidateLikes[0]
     const matchedSlug = overlap[0] || fallback
     const match = starterEvents.find((event) => event.slug === matchedSlug) ?? starterEvents[0]
-
-    setTheirLikes(candidateLikes)
-    setMatchedEvent(match)
     const stored = getStoredChat(match.slug)
     const initial = stored.length ? stored : [
       { from: 'them', text: `Match su ${match.title}. Ti va di sentirci e capire se andare?` }
     ] as ChatMessage[]
+
+    setMatchedEvent(match)
     setChat(initial)
     saveStoredChat(match.slug, initial)
     setStage('match')
@@ -144,8 +143,8 @@ export default function MatchGame() {
           <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-lime text-black shadow-lime">
             <Users size={36} />
           </div>
-          <h1 className="mt-6 font-display text-5xl font-black leading-none">Tocca all altra persona.</h1>
-          <p className="mt-4 text-sm font-medium leading-6 text-muted">Nel demo simuliamo le sue scelte. Nel social vero qui entrera il secondo utente.</p>
+          <h1 className="mt-6 font-display text-5xl font-black leading-none">Tocca all&apos;altra persona.</h1>
+          <p className="mt-4 text-sm font-medium leading-6 text-muted">Nel demo simuliamo le sue scelte. Nel social vero qui entrerà il secondo utente.</p>
           <div className="mx-auto mt-7 h-2 max-w-xs overflow-hidden rounded-full bg-surface2">
             <motion.div className="h-full bg-lime" initial={{ width: '0%' }} animate={{ width: '100%' }} transition={{ duration: 0.65 }} />
           </div>
@@ -185,7 +184,7 @@ export default function MatchGame() {
           <div className="border-b border-white/10 bg-white/[0.035] p-4">
             <p className="text-[10px] font-black uppercase tracking-[0.14em] text-lime">Chat post-match</p>
             <h2 className="mt-1 flex items-center gap-2 font-display text-3xl font-black leading-none">
-              <MessageCircle size={24} /> Accettate l appuntamento
+              <MessageCircle size={24} /> Accettate l&apos;appuntamento
             </h2>
           </div>
           <div className="max-h-[430px] space-y-3 overflow-y-auto p-4">

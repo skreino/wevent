@@ -15,7 +15,7 @@ export default function FilterPanel({ filters, setFilters }: { filters: EventFil
   return (
     <aside className="space-y-6 rounded-card border border-border bg-surface p-4 md:sticky md:top-28">
       <div>
-        <label className="mb-2 block text-[11px] font-black uppercase tracking-[0.1em] text-muted">Citta</label>
+        <label className="mb-2 block text-[11px] font-black uppercase tracking-[0.1em] text-muted">Città</label>
         <select value={filters.city ?? 'Tutte'} onChange={(event) => setFilters({ ...filters, city: event.target.value })} className="h-12 w-full rounded-xl border border-border bg-bg px-3 text-base outline-none focus:border-lime">
           {cities.map((city) => <option key={city}>{city}</option>)}
         </select>
