@@ -4,6 +4,7 @@ import { Plus } from 'lucide-react'
 
 const links = [
   ['Esplora', '/explore'],
+  ['Match', '/match'],
   ['Mappa', '/map'],
   ['Preferiti', '/favorites']
 ]
