@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --grain: radial-gradient(circle at 20% 20%, rgba(199,255,61,0.12), transparent 26%),
+    radial-gradient(circle at 80% 0%, rgba(255,95,135,0.12), transparent 22%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background: #0a0a0a;
+  color: #f0ebe0;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: var(--grain);
+  opacity: 0.75;
+  z-index: -2;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 100% 4px;
+  mix-blend-mode: overlay;
+  z-index: -1;
+}
+
+.poster-title {
+  font-feature-settings: 'ss01' 1;
+  letter-spacing: 0;
+}
+
+.shimmer {
+  background: linear-gradient(90deg, #1e1e1e 25%, #2a2a2a 37%, #1e1e1e 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.35s ease infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 100% 0; }
+  100% { background-position: 0 0; }
+}
+
+.leaflet-container {
+  background: #0a0a0a;
+  font-family: var(--font-body);
+}
